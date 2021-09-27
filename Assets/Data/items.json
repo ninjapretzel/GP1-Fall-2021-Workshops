@@ -1,0 +1,43 @@
+{
+	gp: {
+		name: "GP",
+		kind: "Currency",
+		desc: "Gold coins used as currency everywhere",
+		icon: "coin1",
+		value: 0,
+		rarity: 0,
+		maxStack: -1, // negative implies infinite stacking.
+	},
+	copperOre: {
+		name: "Copper Ore",
+		kind: "Ore",
+		desc: "Mineral ore found in rocky places in various regions.",
+		icon: "ore1",
+		value: 10,
+		rarity: 1,
+		maxStack: -1,
+	},
+	
+	tinOre: {
+		name: "Tin Ore",
+		kind: "Ore",
+		desc: "Mineral ore found in rocky places in various regions.",
+		icon: "ore2",
+		value: 10,
+		rarity: 1,
+		maxStack: -1,
+	}
+	
+	bronzeBar: {
+		name: "Tin Ore",
+		kind: "Bar",
+		desc: "Processed metal ore.",
+		icon: "bar1",
+		value: 20,
+		rarity: 1,
+		stackable: true,
+		maxStack: -1,
+	}
+	
+	
+}
