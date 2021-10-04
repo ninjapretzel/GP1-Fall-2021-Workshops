@@ -23,6 +23,10 @@ public class CharacterController2D : MonoBehaviour {
 		col = GetComponent<Collider2D>();
 		//Physics.BoxCastNonAlloc()
 		Vector3 moved = Vector3.zero;
+		//Debug.Log("BoxOffset: " + col.offset);
+		//Debug.Log("BoxSize: " + (col as BoxCollider2D).size);
+		//Debug.Log("BoxBounds: " + col.bounds);
+		
 		moved += DoMove(new Vector3(0, movement.y, 0));
 		while (moved.y == 0 && Math.Abs(movement.y) > snapDistance) {
 			movement.y *= .5f;
@@ -45,9 +49,11 @@ public class CharacterController2D : MonoBehaviour {
 		if (col != null) {
 			if (col is BoxCollider2D) {
 				BoxCollider2D box = col as BoxCollider2D;
-				Vector3 point = box.transform.position + (Vector3)box.offset + movement;
-				DrawBox(point, box.size / 2f, Color.blue);
-				int numCollisions = Physics2D.OverlapBoxNonAlloc(point, box.size, 0, collisions);
+				Vector3 point = box.transform.position + Vector3.Scale(box.offset, transform.lossyScale) + movement;
+				Vector2 boxSize = Vector2.Scale(box.size, transform.lossyScale);
+				
+				DrawBox(point, boxSize / 2f, Color.blue);
+				int numCollisions = Physics2D.OverlapBoxNonAlloc(point, boxSize, 0, collisions);
 				if (numCollisions != 0) {
 					for (int i = 0; i < numCollisions; i++) {
 						if (collisions[i] == col) { continue; }
@@ -92,20 +98,20 @@ public class CharacterController2D : MonoBehaviour {
 		if (col != null) {
 			if (col is BoxCollider2D) {
 				BoxCollider2D box = col as BoxCollider2D;
-				Vector3 point = box.transform.position + (Vector3)box.offset;
+				Vector3 point = box.transform.position + Vector3.Scale(box.offset, transform.lossyScale);
+				Vector2 boxSize = Vector2.Scale(box.size, transform.lossyScale);
 				//float adjWidth = 1f;
 
 
 				if (DEBUG_DRAW) { // Draw the touching check.
 
-					DrawBox(point, box.size * .5f);
-					DrawBox(point + sweep, box.size * .5f, Color.cyan);
+					DrawBox(point, boxSize * .5f);
+					DrawBox(point + sweep, boxSize * .5f, Color.cyan);
 				}
 
-				Vector2 adjSize = box.size;
 				//adjSize.x *= adjWidth;
 
-				int numCollisions = Physics2D.BoxCastNonAlloc(point, adjSize, 0, sweep, raycastHits, sweep.magnitude + snapDistance);
+				int numCollisions = Physics2D.BoxCastNonAlloc(point, boxSize, 0, sweep, raycastHits, sweep.magnitude + snapDistance);
 				if (numCollisions > 0) {
 					int lowest = -1;
 					float lowestDistance = sweep.magnitude + snapDistance;

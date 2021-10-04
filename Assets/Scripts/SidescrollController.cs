@@ -72,7 +72,7 @@ public class SidescrollController : CharacterController2D {
 		movement += velocity;
 		
 		moved = Move(movement * Time.deltaTime);
-		if (moved.x == 0 && velocity.x != 0) { velocity.x *= .5f; }
+		// if (moved.x == 0 && velocity.x != 0) { velocity.x *= .5f; }
 		if (velocity.y < 0 && CheckWillTouchGround()) { velocity.y *= .5f; }
 		isGrounded = CheckGrounded();
 
